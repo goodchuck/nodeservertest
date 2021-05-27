@@ -1,0 +1,205 @@
+
+#Wrap{
+    width:100%;
+    height:auto;
+    background-color:#666;
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    min-width:1080px;
+}
+
+#Section{
+    width:1080px;
+    height:100%;
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    background-color:#fff;
+}
+#Current{
+    width:1020px;
+    height:138px;
+    display:flex;
+    margin-left: 30px;
+    justify-content: space-between;
+    align-items: flex-start;       
+    flex-direction: column;
+
+
+    
+}
+#CurrentTitle{
+    font-weight: bold;
+    font-size:21px;
+    color:#000;
+}
+#CurrentBoxWrap{
+    width:1020px;
+    height:100px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction:row;
+}
+#AllCheckCurrentBox{  /* 전국 포트홀 검수 현황 */
+    width:183px;
+    height:90px;
+    background-color:#FD51A3;
+    display:flex;
+    justify-content: flex-start;
+    align-items:center ;
+    flex-direction:column;
+    border-radius:3px;
+}
+#AllCheckCurrentBox p {  /*전국 포트홀 검수 현황 수치 */
+    font-size:34px;
+    
+    font-weight:bold;
+    color:#FFFFFF;
+    margin-top:8px;
+    opacity: 1;
+}
+.BoxTitle{  /*현황 타이틀*/
+    
+    font-weight:500;
+    font-size:13.95px;
+    color:#FFFFFF;
+    margin-top:15px;
+    font-weight: bold;
+}
+
+#TodayCheckCurrentBox{ /*당일 포트홀 검수 현황 */
+    width:183px;
+    height:90px;
+    background-color:#FFD374;
+    display:flex;
+    justify-content: flex-start;
+    align-items:center ;
+    flex-direction:column;
+    border-radius:3px;
+}
+
+#TodayCheckCurrentBox p{ /*전국 포트홀 검수 현황 수치 */
+    font-size:34px;
+    
+    font-weight:bold;
+    color:#FFFFFF;
+    margin-top:8px;
+    opacity: 1;
+}
+#AllDetectionCurrentBox{  /* 전체 포트홀 검출 현황 */
+    width:183px;
+    height:90px;
+    background-color:#51ADF6;
+    display:flex;
+    justify-content: flex-start;
+    align-items:center ;
+    flex-direction:column;
+    border-radius:3px;
+}
+#AllDetectionCurrentBox p{   /* 전체 포트홀 검출 현황 수치 */
+    font-size:34px;
+    
+    font-weight:bold;
+    color:#FFFFFF;
+    margin-top:8px;
+    opacity: 1;
+}
+#TodayDetectionCurrentBox {   /* 당일 포트홀 검출 현황 */
+    width:183px;
+    height:90px;
+    background-color:#5987D2;
+    display:flex;
+    justify-content: flex-start;
+    align-items:center ;
+    flex-direction:column;
+    border-radius:3px;
+}
+
+#TodayDetectionCurrentBox p{   /* 당일 포트홀 검출 현황 수치 */
+    font-size:34px;
+    
+    font-weight:bold;
+    color:#FFFFFF;
+    margin-top:8px;
+    opacity: 1;
+}
+
+#LinkageBox {
+    width:183px;
+    height:90px;
+    background-color:#1EC987;
+    display:flex;
+    justify-content: flex-start;
+    align-items:center ;
+    flex-direction:column;
+    border-radius:3px;
+}
+
+#LinkageBox p{   /* 당일 포트홀 검출 현황 수치 */
+    font-size:34px;
+    
+    font-weight:bold;
+    color:#FFFFFF;
+    margin-top:8px;
+    opacity: 1;
+}
+
+#Start_date button {
+    width: 7.6875vw;
+    height: 3.7037vh;
+    max-height: 40px;
+
+    font-size: 1.4815vh;
+    font-weight: bold;
+
+    background-color: #FFFFFF;
+    border: 1px solid #E0E0E0;
+
+    border-radius: 3px;
+    box-shadow:  2px 3px 3px 0px rgba(0, 0, 0, 0.25);
+}
+#Start_date input {
+    width: 10.2917vw;
+    max-width: 180px;
+    height: 3.7037vh;
+    max-height: 38.5px;
+
+    /* font-size: 1.3889vh; */
+    /* font-weight: bold; */
+
+    background-color: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    border-radius: 3px;
+    box-shadow:  2px 3px 3px 0px rgba(0, 0, 0, 0.25);
+    text-align:right;
+    font-size:10px;
+
+    /* padding-left: 5px; */
+}
+
+#Start_date button:hover {
+    background: #E0E0E0;
+    border: 1px solid #FFFFFF;
+}
+
+#Start_date button:active {
+    outline: none;
+    background: black;
+}
+
+#Start_date {
+    height: 6.4815vh;
+    max-height: 70px;
+
+    background: #FAFAFA;
+    border: 1px solid #E0E0E0;
+
+    padding: 0 15px;
+
+    display: flex;
+    justify-content: space-between;
+}

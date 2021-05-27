@@ -1,0 +1,165 @@
+@charset "UTF-8";
+
+#container {
+    width: 700px;
+    min-height: 700px;
+    float: left;
+    background-color:white;
+}
+#states path {
+    fill: #BFD3EB;
+    stroke:white;
+    stroke-width: 1.5px;
+}
+
+#states path:hover {
+    fill:#91A0C4;
+}
+
+/* #states .active {
+    fill:#91A0C4;
+} */
+
+#states .target {
+    fill: #3e8dce;
+}
+#states .target:hover {
+    fill: rgb(0, 81, 255);
+}
+
+#states path {
+    cursor: pointer;
+}
+
+#states text {
+    cursor: pointer;
+    font-size: 12px;
+    fill:black;
+}
+#states .activeTarget{
+    fill: rgb(0, 81, 255);
+}
+svg { background-color: #eee; }
+.background{
+    /* background-color:red */
+}
+/* 
+#states #path-화성시{
+    fill: red;
+    
+}
+#states #path-의정부시{
+    fill: red;
+}
+#states #path-홍천군{
+    fill: red;
+}
+#states #path-강릉시{
+    fill: red;
+}
+#states #path-정선군{
+    fill: red;
+}
+#states #path-충주시{
+    fill: red;
+}
+#states #path-보은군{
+    fill: red;
+}
+#states #path-예산군{
+    fill: red;
+}
+#states #path-전주시완산구{
+    fill: red;
+}
+#states #path-남원시{
+    fill: red;
+}
+#states #path-광주시{
+    fill: red;
+}
+#states #path-순천시{
+    fill: red;
+}
+#states #path-달성군{
+    fill: red;
+}
+#states #path-포항시남구{
+    fill: red;
+}
+#states #path-영주시{
+    fill: red;
+}
+#states #path-김해시{
+    fill: red;
+}
+#states #path-진주시{
+    fill: red;
+}
+#states #path-논산시{
+    fill: red;
+}
+
+
+
+#states #path-화성시:hover{
+    fill: green;
+}
+#states #path-의정부시:hover{
+    fill: green;
+}
+#states #path-홍천군:hover{
+    fill: green;
+}
+#states #path-강릉시:hover{
+    fill: green;
+}
+#states #path-정선군:hover{
+    fill: green;
+}
+#states #path-충주시:hover{
+    fill: green;
+}
+#states #path-보은군:hover{
+    fill: green;
+}
+#states #path-예산군:hover{
+    fill: green;
+}
+#states #path-전주시완산구:hover{
+    fill: green;
+}
+#states #path-남원시:hover{
+    fill: green;
+}
+#states #path-광주시:hover{
+    fill: green;
+}
+#states #path-순천시:hover{
+    fill: green;
+}
+#states #path-달성군:hover{
+    fill: green;
+}
+#states #path-포항시남구:hover{
+    fill: green;
+}
+#states #path-영주시:hover{
+    fill: green;
+}
+#states #path-김해시:hover{
+    fill: green;
+}
+#states #path-진주시:hover{
+    fill: green;
+}
+#states #path-논산시:hover{
+    fill: green;
+}
+#states .active #path-논산시:hover{
+    fill: green;
+}
+
+/* #states #path-영주시{
+    fill: red;
+} */ */

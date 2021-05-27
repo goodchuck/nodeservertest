@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>포트홀 필터 현황</title>
+  <link rel="stylesheet" href="css/Current.css" /> <!-- 현황 -->
+  <link rel="stylesheet" href="css/Management.css" /> <!-- 관리사무소별 -->
+  <link rel="stylesheet" href="css/Graph.css" /> <!-- 표, 지도, 그래프 -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/Current.css')}}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Management.css')}}"/>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/Graph.css')}}"/>
+      
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
+  <script src="js/jquery.js"></script>
+<script src="{{ url_for('static',filename='js/jquery.js')}}"></script>
+
+  <link rel="stylesheet" href="css/korea.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/korea.css')}}"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  <script type="text/javascript" src="js/chart.js"></script>
+  <script type="text/javascript" src="js/d3.js"></script>
+  <script type="text/javascript" src="js/korea.js"></script>
+<script src="{{ url_for('static',filename='js/chart.js')}}"></script>
+<script src="{{ url_for('static',filename='js/d3.js')}}"></script>
+<script src="{{ url_for('static',filename='js/korea.js')}}"></script>
+  <script type="text/javascript">
+    google.charts.load('current', { packages: ['corechart', 'bar'], 'language': 'ko' });
+    google.charts.setOnLoadCallback(drawCharts);
+    //최상단 카드뷰 데이터 받아오기
+    $.ajax({
+      "url": "http://165.246.196.154:3002/app/statis/cardview",
+      "method": "GET"
+    }).done((response) => {
+      document.getElementById("cardAll").innerText = response.inspectAllCnt
+      document.getElementById("cardToday").innerText = response.inspectTodayCnt
+      document.getElementById("cardTodayResult").innerText = response.detectTodayCnt
+      document.getElementById("cardAllResult").innerText = response.detectAllCnt
+    })
+
+
+    // 차트 그리는 콜백함수
+    function drawCharts() {
+      // 인공지능 학습계획
+      var learnData = new google.visualization.DataTable();
+      learnData.addColumn('date', '달');
+      learnData.addColumn('number', '학습');
+      learnData.addColumn({ type: 'string', role: 'annotation' })
+      learnData.addRows([
+        [new Date(2021, 3), 1, "1월"],
+        [new Date(2021, 4), 2, "2회"],
+        [new Date(2021, 5), 4, "4회"],
+        [new Date(2021, 6), 4, "4회"],
+        [new Date(2021, 7), 4, "4회"],
+        [new Date(2021, 8), 4, "4회"],
+        [new Date(2021, 9), 4, "4회"],
+        [new Date(2021, 10), 4, "4회"],
+        [new Date(2021, 11), 4, "4회"],
+        [new Date(2021, 12), 4, "4회"],
+      ]);
+
+      var options = {
+        hAxis: {
+        },
+        vAxis: {
+          textPosition: "none"
+        },
+        backgroundColor: 'white',
+        curveType: 'function',
+        height: 300,
+        width: 1020,
+        chartArea: { width: "80%", height: "80%", top: 40 },
+        pointSize: 6,
+        legend: { position: "none" }
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('Ai_study_plan'));
+      chart.draw(learnData, options);
+
+      const data100 = google.visualization.arrayToDataTable([
+        ['지역', '연계율', { role: 'style' }, { role: 'annotation' }],
+        ['수원', 100, 'blue', "100%"],
+        ['의정부', 100, 'blue', "100%"],
+        ['홍천', 100, 'blue', "100%"],
+        ['강릉', 100, 'blue', "100%"],
+        ['정선', 100, 'blue', "100%"],
+        ['충주', 100, 'blue', "100%"],
+        ['보은', 100, 'blue', "100%"],
+        ['논산', 100, 'blue', "100%"],
+        ['예산', 100, 'blue', "100%"],
+        ['전주', 100, 'blue', "100%"],
+        ['남원', 100, 'blue', "100%"],
+        ['광주', 100, 'blue', "100%"],
+        ['순천', 100, 'blue', "100%"],
+        ['대구', 100, 'blue', "100%"],
+        ['포항', 100, 'blue', "100%"],
+        ['영주', 100, 'blue', "100%"],
+        ['진주', 100, 'blue', "100%"],
+        ['진영', 100, 'blue', "100%"],
+      ]);
+      options = {
+        hAxis: {
+          title: '',
+          maxAlternation: 1
+        },
+        vAxis: {
+          title: '',
+          min: 0,
+          textPosition: "none"
+        },
+        backgroundColor: 'white',
+        curveType: 'function',
+        height: 300,
+        width: 1020,
+        chartArea: { width: "90%", height: "80%" },
+        pointSize: 6,
+        legend: { position: "none" },
+      };
+      var chart100 = new google.visualization.ColumnChart(document.getElementById('Guard'));
+      // options["chartArea"] = { width: "100%", height: "60%", top: 100 }
+      chart100.draw(data100, options);
+      // alert(1)
+      var today = new Date()
+      var tomorrow = new Date(today)
+      tomorrow.setDate(tomorrow.getDate() + 1)
+      var settings_statis_showImagesByDate = {
+
+        "url": "http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + today.toISOString().slice(0, 10) + "&date_to=" + tomorrow.toISOString().slice(0, 10),
+        "method": "GET",
+      };
+
+
+      $.ajax(settings_statis_showImagesByDate).done((response) => {
+
+
+        // respons.PTH_CNT((v)=>{r})
+        const dataArray = [
+          ['수원', 1000, 400],
+          ['의정부', 1000, 400],
+          ['홍천', 1000, 400],
+          ['강릉', 1000, 400],
+          ['정선', 1000, 400],
+          ['충주', 1000, 400],
+          ['보은', 1000, 400],
+          ['논산', 1000, 400],
+          ['예산', 1000, 400],
+          ['전주', 1000, 400],
+          ['남원', 1000, 400],
+          ['광주', 1000, 400],
+          ['순천', 1000, 400],
+          ['대구', 1000, 400],
+          ['포항', 1000, 400],
+          ['영주', 1000, 400],
+          ['진주', 1000, 400],
+          ['진영', 1000, 400],
+        ]
+
+        var temp = [["지역", "기기1", { role: 'annotation' }, "기기2", { role: 'annotation' }]]
+        for (var i = 0; i < dataArray.length; i++) {
+          console.log(i)
+          // alert(i)
+          temp.push([dataArray[i][0], response.HUMAN_CNT[convert[dataArray[i][0]][0]], response.HUMAN_CNT[convert[dataArray[i][0]][0]], response.HUMAN_CNT[convert[dataArray[i][0]][1]], response.HUMAN_CNT[convert[dataArray[i][0]][1]]])
+          // temp.push([dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]])
+          //    dataArray[i]=[dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]]
+          // dataArray[i] = [dataArray[i][0],Object.values(response.PTH_CNT[i*2][0])[0],Object.values(response.PTH_CNT[i*2+1][0])[0]]
+        }
+        console.log(temp)
+        var data = google.visualization.arrayToDataTable(temp);
+        var options = {
+          chart: {
+            // title: 'Company Performance',
+            // subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+          },
+          width: 600,
+          height: 205,
+          legend: { position: "none" },
+          chartArea: { width: "90%", height: "80%", left: 30 },
+          vAxis: {
+            viewWindow: {
+              // max:100,
+              min: 0
+            },
+            textPosition: 'none'
+          },
+          hAxis: {
+            textStyle: {
+              fontSize: 6,// or the number you want
+              maxAlternation: 1
+            }
+          },
+          legend: { position: "none" },
+
+        };
+
+        var chart1 = new google.visualization.ColumnChart(document.getElementById('Today_use'));
+        chart1.draw(data, options);
+        document.getElementById('GraphWrap1testNum-1').innerText = response.firstDeviceInspectAllCnt;
+        document.getElementById('GraphWrap1resultNum-1').innerText = response.firstDeviceDetectAllCnt;
+        document.getElementById('GraphWrap1testNum-2').innerText = response.secondDeviceInspectAllCnt;
+        document.getElementById('GraphWrap1resultNum-2').innerText = response.secondDeviceDetectAllCnt;
+
+      })
+      var stackApi = {
+
+        "url": "http://165.246.196.154:3002/app/statis/deviceCompare?date_from=2021-01-01&date_to=2100-01-01",
+        "method": "GET",
+        "async": false
+      };
+
+      $.ajax(stackApi).done((response) => {
+        const dataArray = [
+          ['수원', 1000],
+          ['의정부', 1000],
+          ['홍천', 1000],
+          ['강릉', 1000],
+          ['정선', 1000],
+          ['충주', 1000],
+          ['보은', 1000],
+          ['논산', 1000],
+          ['예산', 1000],
+          ['전주', 1000],
+          ['남원', 1000],
+          ['광주', 1000],
+          ['순천', 1000],
+          ['대구', 1000],
+          ['포항', 1000],
+          ['영주', 1000],
+          ['진주', 1000],
+          ['진영', 1000],
+        ]
+        var temp = [['지역', "건수"]]
+
+
+        for (var i = 0; i < dataArray.length; i++) {
+          temp.push([dataArray[i][0], response.PTH_CNT[convert[dataArray[i][0]][0]] + response.PTH_CNT[convert[dataArray[i][0]][1]]])
+          // temp.push([dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0]+Object.values(response.HUMAN_CNT[i*2+1][0])[0]])
+          //    dataArray[i]=[dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]]
+          // dataArray[i] = [dataArray[i][0],Object.values(response.PTH_CNT[i*2][0])[0],Object.values(response.PTH_CNT[i*2+1][0])[0]]
+        }
+        const sorted = temp.slice(1).sort((a, b) => { return b[1] - a[1] })
+        var sum = 0;
+        var data = google.visualization.arrayToDataTable(temp);
+        for (var i = 1; i < temp.length; i++) {
+          sum = sum + temp[i][1]
+        }
+        for (var i = 0; i < 5; i++) {
+          document.getElementById("maxResultRank" + (i + 1)).innerText = sorted[i][0]
+          document.getElementById("maxResultRankValue" + (i + 1)).innerText = Math.round(sorted[i][1] / sum * 100) + "%"
+          document.getElementById("minResultRank" + (i + 1)).innerText = sorted[sorted.length - 1 - i][0]
+          document.getElementById("minResultRankValue" + (i + 1)).innerText = Math.round(sorted[sorted.length - 1 - i][1] / sum * 100) + "%"
+          document.getElementById("maxAIRank" + (i + 1)).innerText = sorted[i][0]
+          document.getElementById("maxAIRankValue" + (i + 1)).innerText = Math.round(sorted[i][1] / sum * 100) + "%"
+          document.getElementById("minAIRank" + (i + 1)).innerText = sorted[sorted.length - 1 - i][0]
+          document.getElementById("minAIRankValue" + (i + 1)).innerText = Math.round(sorted[sorted.length - 1 - i][1] / sum * 100) + "%"
+        }
+        for (var i = 1; i < temp.length; i++) {
+          data.setFormattedValue(
+            i - 1,
+            0,
+            data.getValue(i - 1, 0) +
+            " (" +
+            ((temp[i][1] / sum) * 100).toFixed(1) +
+            "%)"
+          );
+        }
+        var options = {
+          pieHole: 0.4,
+          width: 720,
+          height: 400,
+          slices: {
+            0: { color: "#4779cc" },
+            1: { color: "#fec242" },
+            2: { color: "#1bc9b7" },
+            3: { color: "#2596f3" },
+            4: { color: "#fe3996" },
+            5: { color: "#a2b077" },
+            6: { color: "#dab5a4" },
+            7: { color: "#f88c72" },
+            8: { color: "#b67d6b" },
+            9: { color: "#e892d8" },
+            10: { color: "#8eff37" },
+            11: { color: "#37ffa7" },
+            12: { color: "#af38ff" },
+            13: { color: "#3788ff" },
+            14: { color: "#6d9be4" },
+            15: { color: "#ede268" },
+            16: { color: "#e87171" },
+            17: { color: "#3787ff" },
+            18: { color: "#6d757d" }
+          },
+          chartArea: { width: "90%", height: "95%" },
+          legend: { position: "left", alignment: "center" },
+          sliceVisibilityThreshold: 0
+        };
+        var options2 = {
+          pieHole: 0.4,
+          width: 620,
+          height: 400,
+          slices: {
+            0: { color: "#4779cc" },
+            1: { color: "#fec242" },
+            2: { color: "#1bc9b7" },
+            3: { color: "#2596f3" },
+            4: { color: "#fe3996" },
+            5: { color: "#a2b077" },
+            6: { color: "#dab5a4" },
+            7: { color: "#f88c72" },
+            8: { color: "#b67d6b" },
+            9: { color: "#e892d8" },
+            10: { color: "#8eff37" },
+            11: { color: "#37ffa7" },
+            12: { color: "#af38ff" },
+            13: { color: "#3788ff" },
+            14: { color: "#6d9be4" },
+            15: { color: "#ede268" },
+            16: { color: "#e87171" },
+            17: { color: "#3787ff" },
+            18: { color: "#6d757d" }
+          },
+          chartArea: { width: "90%", height: "100%" },
+          legend: { position: "left", alignment: "center" },
+          sliceVisibilityThreshold: 0
+        };
+        var barData7 = new google.visualization.DataTable();
+        barData7.addColumn("string", "도시");
+        barData7.addColumn("number", "기여도");
+        barData7.addColumn({ type: "number", role: 'annotation' })
+        barData7.addRows(temp.slice(1).map((v) => { return [...v, v[1]] }));
+        var barChart7 = new google.visualization.BarChart(
+          document.getElementById("Ai_Contribution")
+        );
+        var barOptions = {
+          //   title: "Population of Largest U.S. Cities",
+          hAxis: {
+            minValue: 0
+          },
+          vAxis: {
+            textStyle: {
+              fontSize: 10
+            },
+            maxAlternation: 1
+          },
+          width: 1020,
+          height: 400,
+          title: { position: "none" },
+          chartArea: { width: "95%", right: 0, height: "80%" }
+
+        };
+        barChart7.draw(barData7, barOptions);
+        var chart = new google.visualization.PieChart(
+          document.getElementById("pieChart")
+        );
+        var chart2 = new google.visualization.PieChart(
+          document.getElementById("Ai_study_Contribution")
+        );
+        //   var chart2 = new google.visualization.PieChart(document.getElementById('Ai_study_Contribution'));
+
+        chart.draw(data, options2);
+        chart2.draw(data, options2);
+        ///-7777-////////////////////////////////////////////////////////////////
+        var tempTest = [];
+        for (var i = 0; i < dataArray.length; i++) {
+          tempTest.push([dataArray[i][0], response.HUMAN_CNT[convert[dataArray[i][0]][0]] + response.HUMAN_CNT[convert[dataArray[i][0]][1]], response.HUMAN_CNT[convert[dataArray[i][0]][0]] + response.HUMAN_CNT[convert[dataArray[i][0]][1]]])
+          // temp.push([dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0]+Object.values(response.HUMAN_CNT[i*2+1][0])[0]])
+          //    dataArray[i]=[dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]]
+          // dataArray[i] = [dataArray[i][0],Object.values(response.PTH_CNT[i*2][0])[0],Object.values(response.PTH_CNT[i*2+1][0])[0]]
+        }
+
+        console.log(tempTest)
+        var barData3 = new google.visualization.DataTable();
+        barData3.addColumn("string", "도시");
+        barData3.addColumn("number", "검수");
+        barData3.addColumn({ type: "number", role: 'annotation' })
+        barData3.addRows(tempTest);
+        var barChart3 = new google.visualization.ColumnChart(
+          document.getElementById("columnchart_material3")
+        );
+        const sortedTempTest = tempTest.sort((a, b) => { return b[1] - a[1] })
+        for (var i = 0; i < 5; i++) {
+          // alert(i)
+          sortedTempTest[i]
+          document.getElementById("maxResultStackRank" + (i + 1)).innerText = sortedTempTest[i][0]
+          document.getElementById("maxResultStackRankValue" + (i + 1)).innerText = sortedTempTest[i][1]
+          document.getElementById("maxResultStackRankTest" + (i + 1)).innerText = response.PTH_CNT[convert[sortedTempTest[i][0]][0]] + response.PTH_CNT[convert[sortedTempTest[i][0]][1]]
+          console.log("=========================")
+          console.log(response.PTH_CNT[convert[sortedTempTest[i][0]][0]] + response.PTH_CNT[convert[sortedTempTest[i][0]][1]])
+        }
+        var barOptions3 = {
+          //   title: "Population of Largest U.S. Cities",
+          hAxis: {
+            // title: "Total Population",
+            minValue: 0.,
+            maxAlternation: 1,
+            textStyle: { fontSize: 8 }
+          },
+          vAxis: {
+            textPosition: "none"
+          },
+          width: 600,
+          height: 200,
+          title: { position: "none" },
+          chartArea: { width: "95%", top: 10, height: "80%", right: 0 },
+          maxAlternation: 1
+        };
+        barChart3.draw(barData3, barOptions3);
+
+
+      })
+
+      $.ajax({
+        method: "get",
+        url: "http://165.246.196.154:3002/app/statis/potholeallbymonth"
+      }).done((response) => {
+        var monthData = new google.visualization.DataTable();
+        monthData.addColumn('string', '달');
+        monthData.addColumn('number', '포트홀');
+        monthData.addColumn({ type: 'number', role: 'annotation' })
+        var temp = [
+          ["1월", 0, 0],
+          ["2월", 0, 0],
+          ["3월", 0, 0],
+          ["4월", 0, 0],
+          ["5월", 0, 0],
+          ["6월", 0, 0],
+          ["7월", 0, 0],
+          ["8월", 0, 0],
+          ["9월", 0, 0],
+          ["10월", 0, 0],
+          ["11월", 0, 0],
+          ["12월", 0, 0]
+        ];
+        for (var elem of response.inspectAllByMonth) {
+          temp[elem.MONTH - 1] = [
+            temp[elem.MONTH - 1][0],
+            elem.COUNT,
+            elem.COUNT
+          ];
+        }
+
+        monthData.addRows(
+          temp
+        );
+
+        var options = {
+          hAxis: {
+          },
+          vAxis: {
+            textPosition: "none"
+
+          },
+          backgroundColor: 'white',
+          // curveType: 'function',
+          height: 300,
+          width: 1020,
+          chartArea: { width: "95%", left: 30, },
+          pointSize: 6,
+          legend: { position: "none" },
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('monthChart'));
+        chart.draw(monthData, options);
+      })
+      const cardSetting = {
+        url:
+          "http://165.246.196.154:3002/app/statis/mainsection?secondDeviceId=" + "DEVICE"
+        ,
+        method: "GET"
+      };
+
+      $.ajax(cardSetting).done((response) => {
+        console.log("HERE!");
+        console.log(response);
+        document.getElementById("monthpatroll").innerText = Math.round(
+          response.patrolAllCnt / 2 ///3/25일 부터 달 수 
+        );
+        document.getElementById("allpatroll").innerText =
+          response.patrolAllCnt;
+        document.getElementById("monthtest").innerText = Math.round(
+          response.inspectAllCnt / 2
+        );
+        document.getElementById("alltest").innerText =
+          response.inspectAllCnt;
+        document.getElementById("monthresult").innerText = Math.round(
+          response.detectAllCnt / 2
+        );
+        document.getElementById("allresult").innerText =
+          response.detectAllCnt;
+        document.getElementById("monthdata").innerText = Math.round(
+          response.recvAllCnt / 2
+        );
+        document.getElementById("alldata").innerText = response.recvAllCnt;
+      });
+
+      $.ajax({
+        url: "http://165.246.196.154:3002/app/statis/inspectAllByMonth",
+        method: "get"
+      }).done((response) => {
+        var temp = [["1월", 0, 0], ["2월", 0, 0], ["3월", 0, 0], ["4월", 0, 0], ["5월", 0, 0], ["6월", 0, 0], ["7월", 0, 0], ["8월", 0, 0], ["9월", 0, 0], ["10월", 0, 0], ["11월", 0, 0], ["12월", 0, 0]];
+        for (var elem of response.inspectAllByMonth) {
+          temp[elem.MONTH - 1] = [temp[elem.MONTH - 1][0], elem.COUNT, elem.COUNT];
+        }
+        var data = new google.visualization.DataTable();
+        data.addColumn("string", "달");
+        data.addColumn("number", "사용현황");
+        data.addColumn({ type: 'number', role: 'annotation' })
+        console.log(temp)
+        data.addRows(temp);
+        var chart = new google.visualization.ColumnChart(
+          document.getElementById("monthRegionGraph")
+        );
+        var barOptions = {
+          //   title: "Population of Largest U.S. Cities",
+          hAxis: {
+            minValue: 0,
+          },
+          vAxis: {
+            textPosition: "none"
+
+          },
+          width: 600,
+          height: 200,
+          title: { position: "none" },
+          chartArea: { width: "90%", top: 20, height: "80%" },
+          legend: { position: "none" },
+          bar: { groupWidth: "50%" }
+        };
+        chart.draw(data, barOptions);
+        const sortedTemp = temp.sort((a, b) => { return b[1] - a[1] })
+        for (var i = 0; i < 5; i++) {
+          document.getElementById("monthTableCell-" + (i + 1)).innerText = sortedTemp[i][0]
+          document.getElementById("monthTableCellValue-" + (i + 1)).innerText = sortedTemp[i][1]
+
+        }
+
+      });
+
+      $.ajax({
+        url:
+          "http://165.246.196.154:3002/app/statis/inspectAllByMonth?deviceId=DEVICE00000000",
+        method: "get"
+      }).done((response) => {
+        var temp = [
+          ["1월", 0, 0],
+          ["2월", 0, 0],
+          ["3월", 0, 0],
+          ["4월", 0, 0],
+          ["5월", 0, 0],
+          ["6월", 0, 0],
+          ["7월", 0, 0],
+          ["8월", 0, 0],
+          ["9월", 0, 0],
+          ["10월", 0, 0],
+          ["11월", 0, 0],
+          ["12월", 0, 0]
+        ];
+
+        for (var elem of response.inspectAllByMonth) {
+          temp[elem.MONTH - 1] = [
+            temp[elem.MONTH - 1][0],
+            elem.COUNT,
+            elem.COUNT
+          ];
+        }
+
+        var data = new google.visualization.DataTable();
+        data.addColumn("string", "달");
+        data.addColumn("number", "사용현황");
+        data.addColumn({ type: "number", role: "annotation" });
+        console.log(temp);
+        data.addRows(temp);
+        var options = {
+          hAxis: {
+          },
+          vAxis: {
+            textPosition: "none"
+
+          },
+          backgroundColor: 'white',
+          // curveType: 'function',
+          height: 300,
+          width: 1020,
+          chartArea: { width: "95%", left: 30, },
+          pointSize: 6,
+          legend: { position: "none" },
+        };
+
+        var regionMonthFindChart = new google.visualization.LineChart(
+          document.getElementById("regionMonthFindChart")
+        );
+        regionMonthFindChart.draw(data, options);
+      });
+      ////////////////////////////////////////////////////////////////
+      $.ajax({
+        "url": "http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + '2020-01-01' + "&date_to=" + '2100-01-01',
+        "method": "get"
+      }).done((response) => {
+        const dataArray = [
+          ['수원', 1000, 400],
+          ['의정부', 1000, 400],
+          ['홍천', 1000, 400],
+          ['강릉', 1000, 400],
+          ['정선', 1000, 400],
+          ['충주', 1000, 400],
+          ['보은', 1000, 400],
+          ['논산', 1000, 400],
+          ['예산', 1000, 400],
+          ['전주', 1000, 400],
+          ['남원', 1000, 400],
+          ['광주', 1000, 400],
+          ['순천', 1000, 400],
+          ['대구', 1000, 400],
+          ['포항', 1000, 400],
+          ['영주', 1000, 400],
+          ['진주', 1000, 400],
+          ['진영', 1000, 400],
+        ]
+
+        var temp = [["지역", "기기1", { role: 'annotation' }, "기기2", { role: 'annotation' }]]
+        for (var i = 0; i < dataArray.length; i++) {
+          console.log(i)
+          // alert(i)
+          temp.push([dataArray[i][0], response.HUMAN_CNT[convert[dataArray[i][0]][0]], response.HUMAN_CNT[convert[dataArray[i][0]][0]], response.HUMAN_CNT[convert[dataArray[i][0]][1]], response.HUMAN_CNT[convert[dataArray[i][0]][1]]])
+          // temp.push([dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]])
+          //    dataArray[i]=[dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]]
+          // dataArray[i] = [dataArray[i][0],Object.values(response.PTH_CNT[i*2][0])[0],Object.values(response.PTH_CNT[i*2+1][0])[0]]
+        }
+        console.log(temp)
+        var data = google.visualization.arrayToDataTable(temp);
+        var options = {
+          chart: {
+            // title: 'Company Performance',
+            // subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+          },
+          width: 1020,
+          height: 205,
+          legend: { position: "none" },
+          chartArea: { width: "90%", height: "85%", top: 10 },
+          vAxis: {
+            viewWindow: {
+              // max:100,
+              min: 0
+            },
+            textPosition: "none"
+          }
+        };
+
+        var chart1 = new google.visualization.ColumnChart(document.getElementById('timeSearchBar'));
+        var chart2 = new google.visualization.ColumnChart(document.getElementById('timeResultBar'));
+
+        chart1.draw(data, options);
+        var temp = [["지역", "기기1", { role: 'annotation' }, "기기2", { role: 'annotation' }]]
+        for (var i = 0; i < dataArray.length; i++) {
+          // alert(i)
+          temp.push([dataArray[i][0], response.PTH_CNT[convert[dataArray[i][0]][0]] ? response.PTH_CNT[convert[dataArray[i][0]][0]] : 0, response.PTH_CNT[convert[dataArray[i][0]][0]] ? response.PTH_CNT[convert[dataArray[i][0]][0]] : 0, response.PTH_CNT[convert[dataArray[i][0]][1]] ? response.PTH_CNT[convert[dataArray[i][0]][1]] : 0, response.PTH_CNT[convert[dataArray[i][0]][1]] ? response.PTH_CNT[convert[dataArray[i][0]][1]] : 0])
+          // temp.push([dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]])
+          //    dataArray[i]=[dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]]
+          // dataArray[i] = [dataArray[i][0],Object.values(response.PTH_CNT[i*2][0])[0],Object.values(response.PTH_CNT[i*2+1][0])[0]]
+        }
+        console.log(temp)
+        var data2 = google.visualization.arrayToDataTable(temp);
+
+        chart2.draw(data2, options)
+        console.log(response)
+      })
+      $.ajax({
+        "url": "http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate,
+        "method": "GET",
+      }).done((response) => {
+        const dataArray = [
+          ['수원', 1000],
+          ['의정부', 1000],
+          ['홍천', 1000],
+          ['강릉', 1000],
+          ['정선', 1000],
+          ['충주', 1000],
+          ['보은', 1000],
+          ['논산', 1000],
+          ['예산', 1000],
+          ['전주', 1000],
+          ['남원', 1000],
+          ['광주', 1000],
+          ['순천', 1000],
+          ['대구', 1000],
+          ['포항', 1000],
+          ['영주', 1000],
+          ['진주', 1000],
+          ['진영', 1000],
+        ]
+        ///-7777-////////////////////////////////////////////////////////////////
+        var tempTest = [];
+        for (var i = 0; i < dataArray.length; i++) {
+          tempTest.push([dataArray[i][0], response.HUMAN_CNT[convert[dataArray[i][0]][0]] + response.HUMAN_CNT[convert[dataArray[i][0]][1]], response.HUMAN_CNT[convert[dataArray[i][0]][0]] + response.HUMAN_CNT[convert[dataArray[i][0]][1]]])
+          // temp.push([dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0]+Object.values(response.HUMAN_CNT[i*2+1][0])[0]])
+          //    dataArray[i]=[dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]]
+          // dataArray[i] = [dataArray[i][0],Object.values(response.PTH_CNT[i*2][0])[0],Object.values(response.PTH_CNT[i*2+1][0])[0]]
+        }
+
+        console.log(tempTest)
+        var barData3 = new google.visualization.DataTable();
+        barData3.addColumn("string", "도시");
+        barData3.addColumn("number", "검수");
+        barData3.addColumn({ type: "number", role: 'annotation' })
+        barData3.addRows(tempTest);
+        var barChart3 = new google.visualization.ColumnChart(
+          document.getElementById("columnchart_material3")
+        );
+        const sortedTempTest = tempTest.sort((a, b) => { return b[1] - a[1] })
+        for (var i = 0; i < 5; i++) {
+          // alert(i)
+          document.getElementById("maxResultStackRank" + (i + 1)).innerText = sortedTempTest[i][0]
+          document.getElementById("maxResultStackRankValue" + (i + 1)).innerText = sortedTempTest[i][1]
+          document.getElementById("maxResultStackRankTest" + (i + 1)).innerText = response.PTH_CNT[convert[sortedTempTest[i][0]][0]] + response.PTH_CNT[convert[sortedTempTest[i][0]][1]]
+          console.log("=========================")
+          console.log(response.PTH_CNT[convert[sortedTempTest[i][0]][0]] + response.PTH_CNT[convert[sortedTempTest[i][0]][1]])
+        }
+        var barOptions3 = {
+          //   title: "Population of Largest U.S. Cities",
+          hAxis: {
+            // title: "Total Population",
+            minValue: 0.,
+            maxAlternation: 1
+          },
+          vAxis: {
+            textPosition: "none"
+          },
+          width: 600,
+          height: 200,
+          title: { position: "none" },
+          chartArea: { width: "95%", top: 10, height: "80%", right: 0 },
+
+        };
+        barChart3.draw(barData3, barOptions3);
+        alert("조회가 완료되었습니다.")
+      })
+    }
+
+    const searchHandler = () => {
+      document.getElementsByClassName("dateBtn")[0].style.backgroundColor = "#FFFFFF"
+      document.getElementsByClassName("dateBtn")[1].style.backgroundColor = "#FFFFFF"
+      document.getElementsByClassName("dateBtn")[2].style.backgroundColor = "#FFFFFF"
+      document.getElementsByClassName("dateBtn")[3].style.backgroundColor = "#FFFFFF"
+      document.getElementsByClassName("dateBtn")[4].style.backgroundColor = "#FFFFFF"
+      alert("조회중입니다. 30초 정도 기다려주세요.")
+      const fromDate = document.getElementById("frommonth").value
+      const toDate = document.getElementById("tomonth").value
+      console.log(fromDate, toDate)
+      console.log("http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate)
+      // console.log("http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate)
+      $.ajax({
+        "url": "http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate,
+        "method": "get"
+      }).done((response) => {
+        const dataArray = [
+          ['수원', 1000, 400],
+          ['의정부', 1000, 400],
+          ['홍천', 1000, 400],
+          ['강릉', 1000, 400],
+          ['정선', 1000, 400],
+          ['충주', 1000, 400],
+          ['보은', 1000, 400],
+          ['논산', 1000, 400],
+          ['예산', 1000, 400],
+          ['전주', 1000, 400],
+          ['남원', 1000, 400],
+          ['광주', 1000, 400],
+          ['순천', 1000, 400],
+          ['대구', 1000, 400],
+          ['포항', 1000, 400],
+          ['영주', 1000, 400],
+          ['진주', 1000, 400],
+          ['진영', 1000, 400],
+        ]
+
+        var temp = [["지역", "기기1", { role: 'annotation' }, "기기2", { role: 'annotation' }]]
+        for (var i = 0; i < dataArray.length; i++) {
+          console.log(i)
+          // alert(i)
+          temp.push([dataArray[i][0], response.HUMAN_CNT[convert[dataArray[i][0]][0]], response.HUMAN_CNT[convert[dataArray[i][0]][0]], response.HUMAN_CNT[convert[dataArray[i][0]][1]], response.HUMAN_CNT[convert[dataArray[i][0]][1]]])
+          // temp.push([dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]])
+          //    dataArray[i]=[dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]]
+          // dataArray[i] = [dataArray[i][0],Object.values(response.PTH_CNT[i*2][0])[0],Object.values(response.PTH_CNT[i*2+1][0])[0]]
+        }
+        console.log(temp)
+        var data = google.visualization.arrayToDataTable(temp);
+        var options = {
+          chart: {
+            // title: 'Company Performance',
+            // subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+          },
+          width: 1020,
+          height: 205,
+          legend: { position: "none" },
+          chartArea: { width: "90%", height: "85%", top: 10 },
+          vAxis: {
+            viewWindow: {
+              // max:100,
+              min: 0
+            },
+            textPosition: "none"
+          }
+        };
+
+        var chart1 = new google.visualization.ColumnChart(document.getElementById('timeSearchBar'));
+        var chart2 = new google.visualization.ColumnChart(document.getElementById('timeResultBar'));
+
+        chart1.draw(data, options);
+        var temp = [["지역", "기기1", { role: 'annotation' }, "기기2", { role: 'annotation' }]]
+        for (var i = 0; i < dataArray.length; i++) {
+          // alert(i)
+          temp.push([dataArray[i][0], response.PTH_CNT[convert[dataArray[i][0]][0]] ? response.PTH_CNT[convert[dataArray[i][0]][0]] : 0, response.PTH_CNT[convert[dataArray[i][0]][0]] ? response.PTH_CNT[convert[dataArray[i][0]][0]] : 0, response.PTH_CNT[convert[dataArray[i][0]][1]] ? response.PTH_CNT[convert[dataArray[i][0]][1]] : 0, response.PTH_CNT[convert[dataArray[i][0]][1]] ? response.PTH_CNT[convert[dataArray[i][0]][1]] : 0])
+          // temp.push([dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]])
+          //    dataArray[i]=[dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]]
+          // dataArray[i] = [dataArray[i][0],Object.values(response.PTH_CNT[i*2][0])[0],Object.values(response.PTH_CNT[i*2+1][0])[0]]
+        }
+        console.log(temp)
+        var data2 = google.visualization.arrayToDataTable(temp);
+
+        chart2.draw(data2, options)
+        console.log(response)
+      })
+      $.ajax({
+        "url": "http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate,
+        "method": "GET",
+      }).done((response) => {
+        const dataArray = [
+          ['수원', 1000],
+          ['의정부', 1000],
+          ['홍천', 1000],
+          ['강릉', 1000],
+          ['정선', 1000],
+          ['충주', 1000],
+          ['보은', 1000],
+          ['논산', 1000],
+          ['예산', 1000],
+          ['전주', 1000],
+          ['남원', 1000],
+          ['광주', 1000],
+          ['순천', 1000],
+          ['대구', 1000],
+          ['포항', 1000],
+          ['영주', 1000],
+          ['진주', 1000],
+          ['진영', 1000],
+        ]
+        ///-7777-////////////////////////////////////////////////////////////////
+        var tempTest = [];
+        for (var i = 0; i < dataArray.length; i++) {
+          tempTest.push([dataArray[i][0], response.HUMAN_CNT[convert[dataArray[i][0]][0]] + response.HUMAN_CNT[convert[dataArray[i][0]][1]], response.HUMAN_CNT[convert[dataArray[i][0]][0]] + response.HUMAN_CNT[convert[dataArray[i][0]][1]]])
+          // temp.push([dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0]+Object.values(response.HUMAN_CNT[i*2+1][0])[0]])
+          //    dataArray[i]=[dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]]
+          // dataArray[i] = [dataArray[i][0],Object.values(response.PTH_CNT[i*2][0])[0],Object.values(response.PTH_CNT[i*2+1][0])[0]]
+        }
+
+        console.log(tempTest)
+        var barData3 = new google.visualization.DataTable();
+        barData3.addColumn("string", "도시");
+        barData3.addColumn("number", "검수");
+        barData3.addColumn({ type: "number", role: 'annotation' })
+        barData3.addRows(tempTest);
+        var barChart3 = new google.visualization.ColumnChart(
+          document.getElementById("columnchart_material3")
+        );
+        const sortedTempTest = tempTest.sort((a, b) => { return b[1] - a[1] })
+        for (var i = 0; i < 5; i++) {
+          // alert(i)
+          document.getElementById("maxResultStackRank" + (i + 1)).innerText = sortedTempTest[i][0]
+          document.getElementById("maxResultStackRankValue" + (i + 1)).innerText = sortedTempTest[i][1]
+          document.getElementById("maxResultStackRankTest" + (i + 1)).innerText = response.PTH_CNT[convert[sortedTempTest[i][0]][0]] + response.PTH_CNT[convert[sortedTempTest[i][0]][1]]
+          console.log("=========================")
+          console.log(response.PTH_CNT[convert[sortedTempTest[i][0]][0]] + response.PTH_CNT[convert[sortedTempTest[i][0]][1]])
+        }
+        var barOptions3 = {
+          //   title: "Population of Largest U.S. Cities",
+          hAxis: {
+            // title: "Total Population",
+            minValue: 0.,
+            maxAlternation: 1
+          },
+          vAxis: {
+            textPosition: "none"
+          },
+          width: 600,
+          height: 200,
+          title: { position: "none" },
+          chartArea: { width: "95%", top: 10, height: "80%", right: 0 },
+
+        };
+        barChart3.draw(barData3, barOptions3);
+        alert("조회가 완료되었습니다.")
+      })
+
+
+    }
+
+
+    searchHandler_Test = (date_from, date_to) => {
+      document.getElementsByClassName("dateBtn")[0].style.backgroundColor = "#FFFFFF"
+      document.getElementsByClassName("dateBtn")[1].style.backgroundColor = "#FFFFFF"
+      document.getElementsByClassName("dateBtn")[2].style.backgroundColor = "#FFFFFF"
+      document.getElementsByClassName("dateBtn")[3].style.backgroundColor = "#FFFFFF"
+      document.getElementsByClassName("dateBtn")[4].style.backgroundColor = "#FFFFFF"
+      alert("조회중입니다. 30초 정도 기다려주세요.")
+      const fromDate = date_from
+      const toDate = date_to
+      document.getElementById("frommonth").value = fromDate
+      document.getElementById("tomonth").value = toDate
+
+
+      console.log(fromDate, toDate)
+      console.log("http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate)
+      // console.log("http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate)
+      $.ajax({
+        "url": "http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate,
+        "method": "get"
+      }).done((response) => {
+        const dataArray = [
+          ['수원', 1000, 400],
+          ['의정부', 1000, 400],
+          ['홍천', 1000, 400],
+          ['강릉', 1000, 400],
+          ['정선', 1000, 400],
+          ['충주', 1000, 400],
+          ['보은', 1000, 400],
+          ['논산', 1000, 400],
+          ['예산', 1000, 400],
+          ['전주', 1000, 400],
+          ['남원', 1000, 400],
+          ['광주', 1000, 400],
+          ['순천', 1000, 400],
+          ['대구', 1000, 400],
+          ['포항', 1000, 400],
+          ['영주', 1000, 400],
+          ['진주', 1000, 400],
+          ['진영', 1000, 400],
+        ]
+
+        var temp = [["지역", "기기1", { role: 'annotation' }, "기기2", { role: 'annotation' }]]
+        for (var i = 0; i < dataArray.length; i++) {
+          console.log(i)
+          // alert(i)
+          temp.push([dataArray[i][0], response.HUMAN_CNT[convert[dataArray[i][0]][0]], response.HUMAN_CNT[convert[dataArray[i][0]][0]], response.HUMAN_CNT[convert[dataArray[i][0]][1]], response.HUMAN_CNT[convert[dataArray[i][0]][1]]])
+          // temp.push([dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]])
+          //    dataArray[i]=[dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]]
+          // dataArray[i] = [dataArray[i][0],Object.values(response.PTH_CNT[i*2][0])[0],Object.values(response.PTH_CNT[i*2+1][0])[0]]
+        }
+        console.log(temp)
+        var data = google.visualization.arrayToDataTable(temp);
+        var options = {
+          chart: {
+            // title: 'Company Performance',
+            // subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+          },
+          width: 1020,
+          height: 205,
+          legend: { position: "none" },
+          chartArea: { width: "90%", height: "85%", top: 10 },
+          vAxis: {
+            viewWindow: {
+              // max:100,
+              min: 0
+            },
+            textPosition: "none"
+          }
+        };
+
+        var chart1 = new google.visualization.ColumnChart(document.getElementById('timeSearchBar'));
+        var chart2 = new google.visualization.ColumnChart(document.getElementById('timeResultBar'));
+
+        chart1.draw(data, options);
+        var temp = [["지역", "기기1", { role: 'annotation' }, "기기2", { role: 'annotation' }]]
+        for (var i = 0; i < dataArray.length; i++) {
+          // alert(i)
+          temp.push([dataArray[i][0], response.PTH_CNT[convert[dataArray[i][0]][0]] ? response.PTH_CNT[convert[dataArray[i][0]][0]] : 0, response.PTH_CNT[convert[dataArray[i][0]][0]] ? response.PTH_CNT[convert[dataArray[i][0]][0]] : 0, response.PTH_CNT[convert[dataArray[i][0]][1]] ? response.PTH_CNT[convert[dataArray[i][0]][1]] : 0, response.PTH_CNT[convert[dataArray[i][0]][1]] ? response.PTH_CNT[convert[dataArray[i][0]][1]] : 0])
+          // temp.push([dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]])
+          //    dataArray[i]=[dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]]
+          // dataArray[i] = [dataArray[i][0],Object.values(response.PTH_CNT[i*2][0])[0],Object.values(response.PTH_CNT[i*2+1][0])[0]]
+        }
+        console.log(temp)
+        var data2 = google.visualization.arrayToDataTable(temp);
+
+        chart2.draw(data2, options)
+        console.log(response)
+      })
+      $.ajax({
+        "url": "http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate,
+        "method": "GET",
+      }).done((response) => {
+        const dataArray = [
+          ['수원', 1000],
+          ['의정부', 1000],
+          ['홍천', 1000],
+          ['강릉', 1000],
+          ['정선', 1000],
+          ['충주', 1000],
+          ['보은', 1000],
+          ['논산', 1000],
+          ['예산', 1000],
+          ['전주', 1000],
+          ['남원', 1000],
+          ['광주', 1000],
+          ['순천', 1000],
+          ['대구', 1000],
+          ['포항', 1000],
+          ['영주', 1000],
+          ['진주', 1000],
+          ['진영', 1000],
+        ]
+        ///-7777-////////////////////////////////////////////////////////////////
+        var tempTest = [];
+        for (var i = 0; i < dataArray.length; i++) {
+          tempTest.push([dataArray[i][0], response.HUMAN_CNT[convert[dataArray[i][0]][0]] + response.HUMAN_CNT[convert[dataArray[i][0]][1]], response.HUMAN_CNT[convert[dataArray[i][0]][0]] + response.HUMAN_CNT[convert[dataArray[i][0]][1]]])
+          // temp.push([dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0]+Object.values(response.HUMAN_CNT[i*2+1][0])[0]])
+          //    dataArray[i]=[dataArray[i][0],Object.values(response.HUMAN_CNT[i*2][0])[0],Object.values(response.HUMAN_CNT[i*2+1][0])[0]]
+          // dataArray[i] = [dataArray[i][0],Object.values(response.PTH_CNT[i*2][0])[0],Object.values(response.PTH_CNT[i*2+1][0])[0]]
+        }
+
+        console.log(tempTest)
+        var barData3 = new google.visualization.DataTable();
+        barData3.addColumn("string", "도시");
+        barData3.addColumn("number", "검수");
+        barData3.addColumn({ type: "number", role: 'annotation' })
+        barData3.addRows(tempTest);
+        var barChart3 = new google.visualization.ColumnChart(
+          document.getElementById("columnchart_material3")
+        );
+        const sortedTempTest = tempTest.sort((a, b) => { return b[1] - a[1] })
+        for (var i = 0; i < 5; i++) {
+          // alert(i)
+          document.getElementById("maxResultStackRank" + (i + 1)).innerText = sortedTempTest[i][0]
+          document.getElementById("maxResultStackRankValue" + (i + 1)).innerText = sortedTempTest[i][1]
+          document.getElementById("maxResultStackRankTest" + (i + 1)).innerText = response.PTH_CNT[convert[sortedTempTest[i][0]][0]] + response.PTH_CNT[convert[sortedTempTest[i][0]][1]]
+          console.log("=========================")
+          console.log(response.PTH_CNT[convert[sortedTempTest[i][0]][0]] + response.PTH_CNT[convert[sortedTempTest[i][0]][1]])
+        }
+        var barOptions3 = {
+          //   title: "Population of Largest U.S. Cities",
+          hAxis: {
+            // title: "Total Population",
+            minValue: 0.,
+            maxAlternation: 1
+          },
+          vAxis: {
+            textPosition: "none"
+          },
+          width: 600,
+          height: 200,
+          title: { position: "none" },
+          chartArea: { width: "95%", top: 10, height: "80%", right: 0 },
+
+        };
+        barChart3.draw(barData3, barOptions3);
+        alert("조회가 완료되었습니다.")
+      })
+
+
+    }
+
+
+    function formatDate(date) {
+              var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+              if (month.length < 2)
+                month = '0' + month;
+              if (day.length < 2)
+                day = '0' + day;
+
+              return [year, month, day].join('-');
+            }
+
+
+
+
+    clickHanlder = (dom) => {
+      document.getElementsByClassName("dateBtn")[0].style.backgroundColor = "#FFFFFF"
+      document.getElementsByClassName("dateBtn")[1].style.backgroundColor = "#FFFFFF"
+      document.getElementsByClassName("dateBtn")[2].style.backgroundColor = "#FFFFFF"
+      document.getElementsByClassName("dateBtn")[3].style.backgroundColor = "#FFFFFF"
+      document.getElementsByClassName("dateBtn")[4].style.backgroundColor = "#FFFFFF"
+      console.log(dom)
+      dom.style.backgroundColor = "rgb(218, 218, 218)" // 이 부분 조절
+
+      if (dom.innerText == "전체") {
+
+        const today = new Date()
+        const tomorrow = new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000)
+
+
+        var date_from = "2021-03-25"
+        var date_to = formatDate(tomorrow)
+
+        searchHandler_Test(date_from, date_to)
+
+
+      }
+
+      else if (dom.innerText == "오늘") {
+
+
+        const today = new Date()
+        const tomorrow = new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000)
+
+
+        var date_from = formatDate(today)
+        var date_to = formatDate(tomorrow)
+
+        searchHandler_Test(date_from, date_to)
+
+
+
+
+      }
+
+      else if (dom.innerText == "어제") {
+
+        const today = new Date()
+        const yesterday = new Date(today.getTime() - 1 * 24 * 60 * 60 * 1000)
+
+
+        var date_from = formatDate(yesterday)
+        var date_to = formatDate(today)
+
+
+        searchHandler_Test(date_from, date_to)
+
+
+      }
+
+      else if (dom.innerText == "월") {
+
+
+        const thisMonth = new Date()
+        thisMonth.setDate(1)
+
+        var nextMonth = new Date(thisMonth)
+
+        if (thisMonth.getMonth() == 11) {
+          nextMonth = new Date(thisMonth.getFullYear() + 1, 0, 1);
+        }
+
+        else {
+          nextMonth = new Date(thisMonth.getFullYear(), thisMonth.getMonth() + 1, 1);
+        }
+
+
+        var date_from = formatDate(thisMonth)
+        var date_to = formatDate(nextMonth)
+
+        searchHandler_Test(date_from, date_to)
+
+
+      }
+
+
+      else if (dom.innerText == "주") {
+
+        let today = new Date()
+        today = new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000)
+        const beforeWeek = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000)
+
+
+        var date_from = formatDate(beforeWeek)
+        var date_to = formatDate(today)
+
+        searchHandler_Test(date_from, date_to)
+
+
+      }
+
+    }
+  </script>
+</head>
+
+<body>
+  <div id="Wrap">
+    <div id="Section">
+      <div style="width:100%; height:180px; background-color:#F2F2F2">
+      <div id="Current" >
+        <div id="CurrentTitle" style="margin-top:10px;">전국 포트홀 현황</div>
+        <div id="CurrentBoxWrap">
+          <div id="AllCheckCurrentBox">
+            <div class="BoxTitle">
+               전국 포트홀 검수 현황
+            </div>
+            <p id="cardAll">0</p>
+          </div>
+          <div id="TodayCheckCurrentBox">
+            <div class="BoxTitle">당일 포트홀 검수 현황</div>
+            <p id="cardToday">0</p>
+          </div>
+          <div id="AllDetectionCurrentBox">
+            <div class="BoxTitle">전체 포트홀 검출 현황</div>
+            <p id="cardAllResult">0</p>
+          </div>
+          <div id="TodayDetectionCurrentBox">
+            <div class="BoxTitle">당일 포트홀 검출 현황</div>
+            <p id="cardTodayResult">0</p>
+          </div>
+          <div id="LinkageBox">
+            <div class="BoxTitle">당일 지킴이 연계율</div>
+            <p>100%</p>
+          </div>
+        </div>
+        </div>
+      </div> <!-- Current  -->
+      <div id="ManagementWrap">
+        <div id="ManagementOfficeText">
+          <div id="ManagementTitle">국토관리사무소별</div>
+          <div style="width:48%; height:90px; margin-top:10px;">
+            <div style="width:48%; font-weight:bold; margin-bottom:5px; font-size:16px;">포트홀 현황</div>
+            <div id="sleceted" style="width:auto; font-weight: bold; font-size:30px;">국토관리사무소를 선택하세요.</div>
+          </div>
+        </div>
+        <div id="ManagementDataWrap">
+          <div id="ManagementMap">
+            <div id="container"></div>
+          </div>
+          <!-- 위로조정 -->
+          <div id="CityPortHallWrap" style="border-radius: 5px; margin-top:10px; padding-top:10px;">
+            
+            <div class="MonthlyAccumulatedWrap" id = MonthlyAccumulatedWrap_row_1>
+              <div class="MonthlyAccumulatedTitle"> 월 평균 <br> 순회 횟수</div>
+              <div class="MonthlyAccumulatedText" id="monthpatroll"></div>
+            </div>
+            <div class="MonthlyAccumulatedWrap" id = MonthlyAccumulatedWrap_row_1 >
+              <div class="MonthlyAccumulatedTitle"> 누적<br> 순회 횟수</div>
+              <div class="MonthlyAccumulatedText" id="allpatroll"></div>
+            </div>
+            <div class="MonthlyAccumulatedWrap" id = MonthlyAccumulatedWrap_row_2 >
+              <div class="MonthlyAccumulatedTitle"> 월 평균 <br> 수신데이터 현황</div>
+              <div class="MonthlyAccumulatedText" id="monthdata"></div>
+            </div>
+            <div class="MonthlyAccumulatedWrap" id = MonthlyAccumulatedWrap_row_2 >
+              <div class="MonthlyAccumulatedTitle"> 누적<br> 수신데이터 현황</div>
+              <div class="MonthlyAccumulatedText" id="alldata"></div>
+            </div>
+            <div class="MonthlyAccumulatedWrap" id = MonthlyAccumulatedWrap_row_3>
+              <div class="MonthlyAccumulatedTitle"> 월 평균 <br> 검수 횟수</div>
+              <div class="MonthlyAccumulatedText" id='monthtest'></div>
+            </div>
+            <div class="MonthlyAccumulatedWrap" id = MonthlyAccumulatedWrap_row_3>
+              <div class="MonthlyAccumulatedTitle"> 누적 <br> 검수 횟수</div>
+              <div class="MonthlyAccumulatedText" id="alltest"></div>
+            </div>
+            <div class="MonthlyAccumulatedWrap" id = MonthlyAccumulatedWrap_row_4>
+              <div class="MonthlyAccumulatedTitle"> 월 평균 <br> 검출 포트홀</div>
+              <div class="MonthlyAccumulatedText" id="monthresult"></div>
+            </div>
+            <div class="MonthlyAccumulatedWrap" id = MonthlyAccumulatedWrap_row_4>
+              <div class="MonthlyAccumulatedTitle"> 누적 <br>검출 포트홀</div>
+              <div class="MonthlyAccumulatedText" id="allresult"></div>
+            </div>
+          </div>
+        </div>
+      </div> <!-- ManagementWrap -->
+      <div class="contentWrap" id="margin_top_30" style="height:320px;margin-top:40px">
+        <div id="monthResultRegion" class="contentHead" style="font-weight: bold; text-indent:10px; color: #6078c2;">월별 포트홀 검출 그래프</div>
+        <div class="contentBox" height="270px">
+          <div class="pieChartBox" id="width_100">
+            <div id="monthChart"></div>
+          </div>
+        </div>
+      </div>
+      <div class="contentWrap" id="margin_top_30" style="height:320px">
+        <div id="contentHeadFind" class="contentHeadFind" style="font-weight: bold;text-indent:10px; color: #6078c2;">월별 포트홀 검수 그래프</div>
+        <div class="contentBox" height="270px">
+          <div class="pieChartBox" id="width_100">
+            <div id="regionMonthFindChart"></div>
+          </div>
+        </div>
+      </div>
+      <div id="DayExamine">
+        <div class="GraphBox" style="border-radius: 5px; overflow: hidden;">
+          <div class="GraphTitleBox">
+            <!-- 그래프 제목  -->
+            <h2>&nbsp당일 포트홀 사용 현황</h2>
+          </div> <!-- 그래프 제목  -->
+          <div class="Graph">
+            <div id="Today_use"></div>
+          </div>
+        </div>
+        <div class="TableWrap" style="border-radius: 5px; overflow: hidden;">
+          <!-- 표 -->
+          <div class="GraphTitleBox" id = "GraphTitleBoxPotholeState">
+            <!-- 그래프 제목  -->
+            <h3 id="GraphWrap1Title" style="text-indent:10px; color: #FFFFFF;">전체 국토관리사무소 당일 포트홀 현황 </h3>
+          </div>
+          <div class="TableBox" id="width_100" style="justify-content: center; /* align-items: center; */ display:flex;">
+            <table id="Detection_status_Table">
+              <th class="tablehead">순위</th>
+              <th class="tablehead">디바이스 번호</th>
+              <th class="tablehead">검수개수</th>
+              <th class="tablehead">검출개수</th>
+              <tr id="border_bottom">
+                <td class="cell">1</td>
+                <td class="cell">기기1번</td>
+                <td class="cell" id="GraphWrap1testNum-1">0</td>
+                <td class="cell" id="GraphWrap1resultNum-1">0</td>
+              </tr>
+              <tr id="border_bottom">
+                <td class="cell">2</td>
+                <td class="cell">기기2번</td>
+                <td class="cell" id="GraphWrap1testNum-2">0</td>
+                <td class="cell" id="GraphWrap1resultNum-2">0</td>
+              </tr>
+              <tr id="border_bottom">
+                <td class="cell">합계</td>
+                <td class="cell"></td>
+                <td class="cell" id="GraphWrap1TestSum">0</td>
+                <td class="cell" id="GraphWrap1ResultSum">0</td>
+              </tr>
+            </table>
+          </div>
+        </div><!-- 표 -->
+      </div>
+      <div id="DayExamine">
+        <div class="GraphBox" style="border-radius: 5px; overflow: hidden;">
+          <div class="GraphTitleBox">
+            <!-- 그래프 제목  -->
+            <h2 style="text-indent:10px; " id="monthDeviceUsed">월별 포트홀 기기 사용 현황</h2>
+          </div> <!-- 그래프 제목  -->
+          <div class="Graph">
+            <div id="monthRegionGraph"></div>
+          </div>
+        </div>
+        <div class="TableWrap" style="border-radius: 5px; overflow: hidden;">
+          <div class="GraphTitleBox" id = "GraphTitleBoxPotholeInspectComparasion">
+            <h3 id="GraphWrap2Title" style="text-indent:10px; color: #FFFFFF;">전체 국토관리사무소 월별 포트홀 검수량 비교</h3>
+          </div>
+          <div class="TableBox" id="width_100" style="justify-content: center; /* align-items: center; */ display:flex">
+            <table id="Detection_status_Table">
+              <th class="tablehead">순위</th>
+              <th class="tablehead">월</th>
+              <th class="tablehead">검수현황</th>
+              <tr id="border_bottom">
+                <td class="cell">1</td>
+                <td class="cell" id="monthTableCell-1">0</td>
+                <td class="cell" id="monthTableCellValue-1">0</td>
+              </tr>
+              <tr id="border_bottom">
+                <td class="cell">2</td>
+                <td class="cell" id="monthTableCell-2">0</td>
+                <td class="cell" id="monthTableCellValue-2">0</td>
+              </tr>
+              <tr id="border_bottom">
+                <td class="cell">3</td>
+                <td class="cell" id="monthTableCell-1">0</td>
+                <td class="cell" id="monthTableCellValue-1">0</td>
+              </tr>
+              <tr id="border_bottom">
+                <td class="cell">4</td>
+                <td class="cell" id="monthTableCell-1">0</td>
+                <td class="cell" id="monthTableCellValue-1">0</td>
+              </tr>
+              <tr id="border_bottom">
+                <td class="cell">5</td>
+                <td class="cell" id="monthTableCell-1">0</td>
+                <td class="cell" id="monthTableCellValue-1">0</td>
+              </tr>
+            </table>
+          </div>
+        </div><!-- 표 -->
+      </div>
+      <div id="Start_date"
+        style="background-color: #FAFAFB; border-radius:5px; padding-left :15px; width:990px; margin-top: 20px;">
+        <!-- 해당 부분에 onClick 리스너를 달고 해당 기간을 조회하는 함수를 연결합니다. -->
+        <button class="dateBtn" onclick="clickHanlder(this)">전체</button>
+        <button class="dateBtn" onclick="clickHanlder(this)">어제</button>
+        <button class="dateBtn" onclick="clickHanlder(this)">오늘</button>
+        <button class="dateBtn" onclick="clickHanlder(this)">주</button>
+        <button class="dateBtn" onclick="clickHanlder(this)">월</button>
+        <input name="month" id="frommonth" style="margin-left:10px; margin-right:10px; float:right;" type="date"></input>
+        ~
+        <input name="month" id="tomonth" style="margin-left:10px; margin-right:10px; float:right;" type="date"></input>
+        <button onclick="searchHandler()">
+          조회
+        </button>
+      </div>
+      <div id="ByRegion">
+        <div class="GraphBox" style="overflow: hidden; border: 1px solid #eaebea; border-radius: 5px;">
+          <div class="GraphTitleBox">
+            <!-- 그래프 제목  -->
+            <h3 style="text-indent:10px; color:#6078C2;">국토관리사무소별 누적 포트홀 사용 현황</h3>
+          </div> <!-- 그래프 제목  -->
+          <div class="Graph">
+            <div id="columnchart_material3"></div>
+          </div>
+        </div>
+        <div class="TableWrap" style="overflow: hidden; border: 1px solid #eaebea; border-radius: 5px;">
+          <!-- 표 -->
+          <div class="GraphTitleBox" id = "GraphTitleBoxPotholeInspectComparasion">
+            <!-- 그래프 제목  -->
+            <h3 style="text-indent:10px; color: #FFFFFF;"> 국토관리사무소별 누적 포트홀 검수 순위</h3>
+          </div>
+          <div class="TableBox" id="width_100" style="justify-content: center; align-items: center; display:flex">
+            <table id="Detection_status_Table">
+              <th class="tablehead">순위</th>
+              <th class="tablehead">사무소</th>
+              <th class="tablehead">검수</th>
+              <th class="tablehead">검출</th>
+
+              <tr class="cellRow">
+                <td class="cell">1</td>
+                <td class="cell" id="maxResultStackRank1">1</td>
+                <td class="cell" id="maxResultStackRankValue1">1</td>
+                <td class="cell" id="maxResultStackRankTest1">1</td>
+              </tr>
+              <tr class="cellRow">
+                <td class="cell">2</td>
+                <td class="cell" id="maxResultStackRank2">2</td>
+                <td class="cell" id="maxResultStackRankValue2">2</td>
+                <td class="cell" id="maxResultStackRankTest2">2</td>
+              </tr>
+              <tr class="cellRow">
+                <td class="cell">3</td>
+                <td class="cell" id="maxResultStackRank3">3</td>
+                <td class="cell" id="maxResultStackRankValue3">3</td>
+                <td class="cell" id="maxResultStackRankTest3">3</td>
+              </tr>
+              <tr class="cellRow">
+                <td class="cell">4</td>
+                <td class="cell" id="maxResultStackRank4">4</td>
+                <td class="cell" id="maxResultStackRankValue4">4</td>
+                <td class="cell" id="maxResultStackRankTest4">4</td>
+              </tr>
+              <tr class="cellRow">
+                <td class="cell">5</td>
+                <td class="cell" id="maxResultStackRank5">5</td>
+                <td class="cell" id="maxResultStackRankValue5">5</td>
+                <td class="cell" id="maxResultStackRankTest5">5</td>
+              </tr>
+            </table>
+          </div>
+        </div><!-- 표 -->
+      </div>
+
+      <div class="Detection_status_Wrap"
+        style='margin-top:20px; overflow: hidden; border: 1px solid #eaebea; border-radius: 5px;'>
+        <div class="Detection_status">
+          <div class="GraphTitleBox">
+            <!-- 그래프 제목  -->
+            <h3 style="text-indent:10px; color:#6078C2;">검색기간 포트홀 기기 검수현황</h3>
+            <!-- <p>new Date().toISOString()</p> -->
+          </div> <!-- 그래프 제목  -->
+          <div class="Graph">
+            <div id="timeSearchBar">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="Detection_status_Wrap"
+        style="margin-top:20px; overflow: hidden;border: 1px solid #eaebea; border-radius: 5px;">
+        <div class="Detection_status">
+          <div class="GraphTitleBox">
+            <!-- 그래프 제목  -->
+            <h3 style="text-indent:10px; color:#6078C2;">검색기간 기기 검출현황</h3>
+            <!-- <p>new Date().toISOString()</p> -->
+          </div> <!-- 그래프 제목  -->
+          <div class="Graph">
+            <div id="timeResultBar">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contentWrap" style="height:440px;">
+        <div class="contentHead" style="text-indent:10px ">국토관리사무소별 포트홀 검출 비율</div>
+        <div class="contentBox" height="400px">
+          <div class="pieChartBox">
+            <div id="pieChart"></div>
+          </div>
+          <div class="LittletableBox" style="height:400px">
+            <div class="LittletableWrap">
+              <div id="width_90" style="margin-top:5px; font-weight:bold">최대 검출 순위</div>
+              <table class="table" id="width_90">
+                <th class="RankingAreaRatio">순위</th>
+                <th class="RankingAreaRatio">지역</th>
+                <th class="RankingAreaRatio">비율</th>
+                <tr class="cellRow">
+                  <td class="tablecell">1</td>
+                  <td class="tablecell" id="maxResultRank1">1</td>
+                  <td class="tablecell" id="maxResultRankValue1">1</td>
+                </tr>
+                <tr class="cellRow">
+                  <td class="tablecell">2</td>
+                  <td class="tablecell" id="maxResultRank2">2</td>
+                  <td class="tablecell" id="maxResultRankValue2">2</td>
+                </tr>
+                <tr class="cellRow">
+                  <td class="tablecell">3</td>
+                  <td class="tablecell" id="maxResultRank3">3</td>
+                  <td class="tablecell" id="maxResultRankValue3">3</td>
+                </tr>
+                <tr class="cellRow">
+                  <td class="tablecell">4</td>
+                  <td class="tablecell" id="maxResultRank4">4</td>
+                  <td class="tablecell" id="maxResultRankValue4">4</td>
+                </tr>
+                <tr class="cellRow">
+                  <td class="tablecell">5</td>
+                  <td class="tablecell" id="maxResultRank5">5</td>
+                  <td class="tablecell" id="maxResultRankValue5">5</td>
+                </tr>
+              </table>
+            </div>
+            <div class="LittletableWrap">
+              <div id="width_90" style="font-weight:bold">&nbsp최소 검출 순위</div>
+              <table class="table" id="width_90">
+                <th class="RankingAreaRatio">순위</th>
+                <th class="RankingAreaRatio">지역</th>
+                <th class="RankingAreaRatio">비율</th>
+                <tr class="cellRow">
+                  <td class="tablecell">1</td>
+                  <td class="tablecell" id="minResultRank1">1</td>
+                  <td class="tablecell" id="minResultRankValue1">1</td>
+                </tr>
+                <tr class="cellRow">
+                  <td class="tablecell">2</td>
+                  <td class="tablecell" id="minResultRank2">2</td>
+                  <td class="tablecell" id="minResultRankValue2">2</td>
+                </tr>
+                <tr class="cellRow">
+                  <td class="tablecell">3</td>
+                  <td class="tablecell" id="minResultRank3">3</td>
+                  <td class="tablecell" id="minResultRankValue3">3</td>
+                </tr>
+                <tr class="cellRow">
+                  <td class="tablecell">4</td>
+                  <td class="tablecell" id="minResultRank4">4</td>
+                  <td class="tablecell" id="minResultRankValue4">4</td>
+                </tr>
+                <tr class="cellRow">
+                  <td class="tablecell">5</td>
+                  <td class="tablecell" id="minResultRank5">5</td>
+                  <td class="tablecell" id="minResultRankValue5">5</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contentWrap" style="height:440px; ">
+        <div class="contentHead" style="text-indent:10px">국토관리사무소별 인공지능 학습 기여도 비율</div>
+        <div class="contentBox">
+          <div class="pieChartBox">
+            <div id="Ai_study_Contribution"></div>
+          </div>
+          <div class="LittletableBox" style="height:400px">
+            <div class="LittletableWrap">
+              <div id="width_90" style="margin-top:5px;font-weight:bold">최대 기여 순위</div>
+              <table class="table" id="width_90">
+                <th class="RankingAreaRatio">순위</th>
+                <th class="RankingAreaRatio">지역</th>
+                <th class="RankingAreaRatio">비율</th>
+                <tr class="cellRow">
+                  <td class="tablecell">1</td>
+                  <td class="tablecell" id="maxAIRank1">1</td>
+                  <td class="tablecell" id="maxAIRankValue1">1</td>
+                </tr>
+                <tr class="cellRow">
+                  <td class="tablecell">2</td>
+                  <td class="tablecell" id="maxAIRank2">2</td>
+                  <td class="tablecell" id="maxAIRankValue2">2</td>
+                </tr>
+                <tr class="cellRow">
+                  <td class="tablecell">3</td>
+                  <td class="tablecell" id="maxAIRank3">3</td>
+                  <td class="tablecell" id="maxAIRankValue3">3</td>
+                </tr>
+                <tr class="cellRow">
+                  <td class="tablecell">4</td>
+                  <td class="tablecell" id="maxAIRank4">4</td>
+                  <td class="tablecell" id="maxAIRankValue4">4</td>
+                </tr>
+                <tr class="cellRow">
+                  <td class="tablecell">5</td>
+                  <td class="tablecell" id="maxAIRank5">5</td>
+                  <td class="tablecell" id="maxAIRankValue5">5</td>
+                </tr>
+              </table>
+            </div>
+            <div class="LittletableWrap">
+              <div id="width_90" style="text-indent:10px;font-weight:bold">최소 기여 순위</div>
+              <table class="table" id="width_90">
+                <th class="RankingAreaRatio">순위</th>
+                <th class="RankingAreaRatio">지역</th>
+                <th class="RankingAreaRatio">비율</th>
+                <tr class="cellRow">
+                  <td class="tablecell">1</td>
+                  <td class="tablecell" id="minAIRank1">1</td>
+                  <td class="tablecell" id="minAIRankValue1">1</td>
+                </tr>
+                <tr class="cellRow">
+                  <td class="tablecell">2</td>
+                  <td class="tablecell" id="minAIRank2">2</td>
+                  <td class="tablecell" id="minAIRankValue2">2</td>
+                </tr>
+                <tr class="cellRow">
+                  <td class="tablecell">3</td>
+                  <td class="tablecell" id="minAIRank3">3</td>
+                  <td class="tablecell" id="minAIRankValue3">3</td>
+                </tr>
+                <tr class="cellRow">
+                  <td class="tablecell">4</td>
+                  <td class="tablecell" id="minAIRank4">4</td>
+                  <td class="tablecell" id="minAIRankValue4">4</td>
+                </tr>
+                <tr class="cellRow">
+                  <td class="tablecell">5</td>
+                  <td class="tablecell" id="minAIRank5">5</td>
+                  <td class="tablecell" id="minAIRankValue5">5</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contentWrap" style="height:440px; ">
+        <div class="contentHead" style="text-indent:10px">국토관리사무소별 인공지능 학습 기여도 분포</div>
+        <div class="contentBox" height="400px">
+          <div id="Ai_Contribution">
+          </div>
+        </div>
+      </div>
+      <div class="AI_Wrap"
+        style='height: 340px;margin-top:20px; overflow: hidden;border: 1px solid #eaebea; border-radius: 5px;'>
+        <div class="GraphBox" id="Width_Height_100" style='height: 330px;'>
+          <div class="GraphTitleBox">
+            <!-- 그래프 제목  -->
+            <h3 style="text-indent:10px; color:#6078C2;">인공지능 학습계획</h3>
+          </div> <!-- 그래프 제목  -->
+          <div class="Graph" id="width_100" style="height: 300px;">
+            <div id="Ai_study_plan">
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="GuardWrap"
+        style='height: 340px;margin-top:20px; overflow: hidden;border: 1px solid #eaebea; border-radius: 5px;'>
+        <div class="GraphBox" id="Width_Height_100">
+          <div class="GraphTitleBox">
+            <!-- 그래프 제목  -->
+            <h3 style="text-indent:10px; color:#6078C2;">지킴이 연계율</h3>
+            <!-- <p>new Date().toISOString()</p> -->
+          </div> <!-- 그래프 제목  -->
+          <div class="Graph" id="width_100">
+            <div id="Guard">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div><!-- GraphExplaneWrap -->
+  <!-- Section  -->
+  </div><!-- Wrap  -->
+</body>
+
+</html>

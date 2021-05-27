@@ -1,0 +1,498 @@
+#DayExamine {
+    width:1020px;
+    height:235px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-top:27px;
+}
+/* DayExamine */
+#GraphWrap2 {
+    width:1020px;
+    height:235px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-top:27px;
+}
+#ByRegion{
+    width:1020px;
+    height:235px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-top:27px;
+}
+#GraphWrap4 {
+    width:1020px;
+    height:235px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-top:27px;
+}
+.GraphBox {
+    width:600px;
+    height:235px;
+    display:flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    border:1px solid #EAEBEA;
+
+}
+.GraphTitleBox {
+    width:100%;
+    height:30px;
+    border-bottom:1px solid #E8E8E8;
+    background-color: #E8E8E8;
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+#GraphTitleBoxPotholeState{
+
+  width:100%;
+  height:30px;
+  border-bottom:1px solid #96a8d8;
+  background-color: #96a8d8;
+  display:flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+
+}
+
+
+#GraphTitleBoxPotholeInspectComparasion {
+
+  width:100%;
+  height:30px;
+  border-bottom:1px solid #96a8d8;
+  background-color: #96a8d8;
+  display:flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+
+}
+
+
+.GraphTitleBox h3{
+    
+    font-size:15px;
+    font-weight:bold;
+    color:000;
+    padding:0px 0px 0px 3px;
+}
+.GraphTitleBox h2{
+    
+    font-size:15px;
+    font-weight:bold;
+    color:#6078c2;
+    padding:0px 0px 0px 3px;
+    width:600px;
+}
+
+.GraphTitleBox p{
+    
+    font-size:15px;
+    font-weight:400;
+    color:000;
+}
+
+.Graph{
+    width:100%;
+    height:205px;
+    background-color:white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid #EAEBEE
+}
+.TableWrap{
+    width:396px;
+    height:236px;
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+    border:1px solid #EAEBEA;
+
+}
+.TableWrap h3{
+    
+    font-weight: bold;
+    color:#000;
+    font-size:15px;
+}
+.TableBox {
+  /*  width:395px; */
+    width: 280px;
+    height:207px;
+    margin-top:10px;
+  /*  background-color:#000; */
+    /* border:1px solid #000; */
+}
+#TableBoxFlex{
+    justify-content:center;
+    align-items:flex-start; 
+    display:flex;
+}
+
+#GraphExplaneWrap{
+    width:100%;
+    height:145px;
+    display:flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    margin-top:13px;
+}
+#GraphExplaneBox{
+    width:454px;
+    height:145px;
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+}
+.GraphExplane{
+    width:auto;
+    height:27px;
+    display:flex;
+    justify-content:flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    margin-left:45px;
+}
+.GraphExplane p{
+    
+    font-weight:400;
+    color:#000;
+    margin-left:15px;
+}
+#GraphExplaneColor1{
+    width:27px;
+    height:27px;
+    background-color:#83A9CD;
+}
+#GraphExplaneColor2{
+    width:27px;
+    height:27px;
+    background-color:#D5E3EC;
+}
+#GraphExplaneColor3{
+    width:27px;
+    height:27px;
+    background-color:#8E8B85;
+}
+#GraphExplaneColor4{
+    width:27px;
+    height:27px;
+    background-color:#D9D4CA;
+}
+/*  */
+.cell{
+    height : 30px;
+    text-align: center;
+    line-height:25px;
+}
+.tablehead{
+    background-color:#9D9D9D;
+    font-size:14px; 
+    color:#ffffff;
+    text-align:center;
+    height:30px;
+}
+.RankingAreaRatio {
+    background-color:#9D9D9D;
+    color:#ffffff;
+    width: 33.33%;
+    height: 30px;
+  }
+/* 왜있는지 모르겠음 */
+/* RankingAreaRatio */
+#wrapper {
+    width: 100vw;
+    min-width: 1080px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    height: auto;
+  }
+  .contentBox {
+    width: 1020px;
+    height: auto;
+    /* background-color:red; */
+    display: flex;
+    flex-direction: row;
+  }
+  .pieChartBox {
+    width: 60%;
+    height: 100%;
+  }
+  .LittletableBox {
+    width: 40%;
+    height: 100%;
+    /* background-color:yellow; */
+    display: flex;
+    flex-direction: column;
+    /* background:red */
+  }
+  .LittletableWrap {
+    height: 50%;
+    width: 100%;
+    /* background-color:brown; */
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+  }
+  .contentHead {
+    width: 1020px;
+    height: 40px;
+    background-color: #E8E8E8;
+    color: #6078C2;
+    line-height: 40px;
+    font-weight: bold;
+  }
+  .contentHeadFind{
+    width: 1020px;
+    height: 40px;
+    background-color: #E8E8E8;
+    color: #6078C2;
+    line-height: 40px;
+    font-weight: bold;
+  }
+  .contentWrap {
+    border: 1px solid #eaebea;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 10px;
+  }
+  .table {
+    width: 90%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    max-height: 100%;
+    overflow: scroll;
+    /* height: 100%; */
+  }
+  
+  
+
+
+
+  .MonthlyAccumulatedWrap{
+    width:45%; 
+    height:400px; 
+    background-color: #F1F5F8; 
+    margin:0; 
+    display:flex; 
+    flex-direction:row; 
+    justify-content:center; 
+    align-items:center;
+    border-radius: 5px;
+  }
+
+  #MonthlyAccumulatedWrap_row_1{
+
+    width:48%; 
+    height:90px; 
+    background-color: #F1F5F8; 
+    margin:0; 
+    display:flex; 
+    flex-direction:row; 
+    justify-content:center; 
+    align-items:center;
+    border-radius: 5px;
+
+
+  }
+
+
+  #MonthlyAccumulatedWrap_row_2{
+
+    width:48%; 
+    height:90px; 
+    
+    background-color: #E6EBF1; 
+    margin:0; 
+    display:flex; 
+    flex-direction:row; 
+    justify-content:center; 
+    align-items:center;
+    border-radius: 5px;
+
+
+  }
+
+
+  #MonthlyAccumulatedWrap_row_3{
+
+    width:48%; 
+    height:90px; 
+    
+    background-color: #D1DDE9; 
+    margin:0; 
+    display:flex; 
+    flex-direction:row; 
+    justify-content:center; 
+    align-items:center;
+    border-radius: 5px;
+
+
+  }
+
+
+  #MonthlyAccumulatedWrap_row_4{
+
+    width:48%; 
+    height:90px; 
+    
+    background-color: #BFCFDE; 
+    margin:0; 
+    display:flex; 
+    flex-direction:row; 
+    justify-content:center; 
+    align-items:center;
+    border-radius: 5px;
+
+
+  }
+
+
+
+  .MonthlyAccumulatedTitle{
+    width: 55%;
+    padding-left: 15px;
+    font-size:16px;
+    text-align:left;
+    line-height:20px;
+    font-weight:bold;
+  }
+  .MonthlyAccumulatedText{
+    width: 45%;
+    padding-right: 15px;
+    font-size:26px;
+    line-height:80px;
+    text-align: right; 
+    font-weight: bold;
+  }
+  #ManagementOfficeText{
+    height:80px; 
+    display:flex; 
+    justify-content:space-between; 
+    flex-direction:row;
+    width:100%;
+  }
+  #margin_top_30{
+    margin-top:30px
+  }
+  #width_100{
+    width:100%;
+  }
+  #width_90{
+    width:90%;
+  }
+  #Width_height_100{
+      width:100%;
+  }
+  #border_bottom{
+    border-bottom: 1px solid lightgray
+  }
+  #Today_use{
+    width: 600px; 
+    height: 205px;
+  }
+  #columnchart_material3{
+    width: 600px; 
+    height: 200px;
+  }
+
+  .AI_Wrap{
+    width:1020px;
+    height:400px; 
+    margin-top:20px;
+      /* 너무많이 선언 */
+  }
+  #GuardWrap{
+    width:1020px;
+    height:400px; 
+    margin-top:20px;
+  }
+  #Ai_study_plan{
+    width:100%; 
+    height: 205px; 
+  }
+  #Guard{
+    width:100%; 
+    height: 300px; 
+  }
+  #Ai_Contribution{
+    width:100%; 
+    height: 300px; 
+  }
+  #Width_Height_100{
+    width:100%;
+    height:100%;
+  }
+  .Detection_status{
+    width:1020px;
+    height:100%;
+    margin-bottom : 10px;
+  }
+  .Detection_status_Wrap{
+    width:auto;
+    height:auto;
+  }
+  .margin_right_10{
+    margin-right: 10px;
+  }
+  #fromyear{
+    margin-right: 10px; 
+    margin-left: 10px;
+  }
+  #Start_date{
+    height:50px; 
+    width:1020px;
+    display:flex; 
+    flex-direction: row; 
+    justify-content:flex-start; 
+    align-items:center; 
+    line-height:30px;
+  }
+  .Width_25{
+    background-color: #eaebea;
+    width: 25%;
+    height: 30px;
+  }
+  #Detection_status_Table{
+    width:90%;
+    table-layout:fixed;
+    border-collapse:collapse;
+  }
+  #toyear{
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  .cellRow {
+    border-bottom: 1px solid #eaebea;
+  }
+  .tablecell {
+    height: 25px;
+    text-align: center;
+  }

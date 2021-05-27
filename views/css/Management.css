@@ -1,0 +1,50 @@
+#ManagementWrap{
+    width:1020px;
+    height:574px;
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-top:31px;
+}
+#ManagementTitle{
+    
+    font-weight:bold;
+    font-size:21px;
+    color:#000;
+}
+#ManagementDataWrap{
+    width:100%;
+    height:574px;
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: row;
+}
+#ManagementMap{ /* 맵 추가 */
+    width:510px;
+    height:574px;
+    background-color:#eee;
+}
+#CityPortHallWrap{ /*도시별 포트홀 현황*/
+    width:500px;
+    height:400px;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    background-color:white;
+    /*border: 1px solid #EAEBEA; */
+    flex-wrap: wrap;
+}
+#CiryPortHall{
+    width:433px;
+    height:335px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    background-color:red;
+}
+
+
