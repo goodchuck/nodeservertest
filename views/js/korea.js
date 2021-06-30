@@ -167,7 +167,7 @@ function drawMap(target) {
           tomorrow.setDate(tomorrow.getDate() + 1);
           var settings_statis_showImagesByDate = {
             url:
-              "http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" +
+              "http://165.246.196.154:25020/app/statis/deviceCompare?date_from=" +
               today.toISOString().slice(0, 10) +
               "&date_to=" +
               tomorrow.toISOString().slice(0, 10),
@@ -209,7 +209,7 @@ function drawMap(target) {
 
           const cardSetting = {
             url:
-              "http://165.246.196.154:3002/app/statis/mainsection?secondDeviceId=" +
+              "http://165.246.196.154:25020/app/statis/mainsection?secondDeviceId=" +
               changeObject[e.properties.SIG_KOR_NM][0] +
               "&firstDeviceId=" +
               changeObject[e.properties.SIG_KOR_NM][1],
@@ -341,22 +341,22 @@ function drawMap(target) {
 
           $.ajax({
             url:
-              "http://165.246.196.154:3002/app/statis/inspectAllByMonth?deviceId=" +
+              "http://165.246.196.154:25020/app/statis/inspectAllByMonth?deviceId=" +
               changeObject[e.properties.SIG_KOR_NM][0],
             method: "get"
           }).done((response) => {
-            console.log("http://165.246.196.154:3002/app/statis/inspectAllByMonth?deviceId=" +
+            console.log("http://165.246.196.154:25020/app/statis/inspectAllByMonth?deviceId=" +
             changeObject[e.properties.SIG_KOR_NM][0])
             response1 = response.inspectAllByMonth;
           });
 
           $.ajax({
             url:
-              "http://165.246.196.154:3002/app/statis/inspectAllByMonth?deviceId=" +
+              "http://165.246.196.154:25020/app/statis/inspectAllByMonth?deviceId=" +
               changeObject[e.properties.SIG_KOR_NM][1],
             method: "get"
           }).done((response2) => {
-            console.log("http://165.246.196.154:3002/app/statis/inspectAllByMonth?deviceId=" +
+            console.log("http://165.246.196.154:25020/app/statis/inspectAllByMonth?deviceId=" +
             changeObject[e.properties.SIG_KOR_NM][1])
             document.getElementById("contentHeadFind").innerText = name2name[e.properties.SIG_KOR_NM]+ " 국토관리사무소 월별 포트홀 검수 그래프"
             var temp = [
@@ -418,16 +418,16 @@ function drawMap(target) {
           var monthResponse1;
           $.ajax({
             method: "get",
-            url: "http://165.246.196.154:3002/app/statis/potholeallbymonth?deviceId="+changeObject[e.properties.SIG_KOR_NM][0]
+            url: "http://165.246.196.154:25020/app/statis/potholeallbymonth?deviceId="+changeObject[e.properties.SIG_KOR_NM][0]
           }).done((response) => {
-            console.log("http://165.246.196.154:3002/app/statis/potholeallbymonth?deviceId="+changeObject[e.properties.SIG_KOR_NM][0])
+            console.log("http://165.246.196.154:25020/app/statis/potholeallbymonth?deviceId="+changeObject[e.properties.SIG_KOR_NM][0])
             monthResponse1=response
             console.log("+_+_+_+_+_+")
             console.log(monthResponse1)
           })
           $.ajax({
             method: "get",
-            url: "http://165.246.196.154:3002/app/statis/potholeallbymonth?deviceId="+changeObject[e.properties.SIG_KOR_NM][1]
+            url: "http://165.246.196.154:25020/app/statis/potholeallbymonth?deviceId="+changeObject[e.properties.SIG_KOR_NM][1]
           }).done((response) => {
             document.getElementById("monthResultRegion").textContent = " "+name2name[e,e.properties.SIG_KOR_NM]+" 국토관리사무소 월별 포트홀 검출 그래프"
             var monthData = new google.visualization.DataTable();
@@ -490,7 +490,7 @@ function drawMap(target) {
           /////// CHANGE API URL
           var useResponse1;
           $.ajax({
-            url : "http://165.246.196.154:3002/app/statis/inspectAllByMonth?deviceId=" +
+            url : "http://165.246.196.154:25020/app/statis/inspectAllByMonth?deviceId=" +
             changeObject[e.properties.SIG_KOR_NM][0],
             method: "get"
           }).done((response) =>{
@@ -499,7 +499,7 @@ function drawMap(target) {
 
 
           $.ajax({
-            url : "http://165.246.196.154:3002/app/statis/inspectAllByMonth?deviceId=" +
+            url : "http://165.246.196.154:25020/app/statis/inspectAllByMonth?deviceId=" +
             changeObject[e.properties.SIG_KOR_NM][1],
             method: "get"
           }).done((useResponse2) => {

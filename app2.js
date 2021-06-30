@@ -1,7 +1,7 @@
 //app.js
 const express = require('express');
 const app = express();
-const port = 30006;
+const port = 25000;
 //app.set('views', __dirname + '/views');
 //app.set('view engine', 'ejs');
 //app.engine('html', require('ejs').renderFile);

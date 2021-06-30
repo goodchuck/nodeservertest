@@ -37,7 +37,7 @@
     google.charts.setOnLoadCallback(drawCharts);
     //최상단 카드뷰 데이터 받아오기
     $.ajax({
-      "url": "http://165.246.196.154:3002/app/statis/cardview",
+      "url": "http://165.246.196.154:25020/app/statis/cardview",
       "method": "GET"
     }).done((response) => {
       document.getElementById("cardAll").innerText = response.inspectAllCnt
@@ -133,7 +133,7 @@
       tomorrow.setDate(tomorrow.getDate() + 1)
       var settings_statis_showImagesByDate = {
 
-        "url": "http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + today.toISOString().slice(0, 10) + "&date_to=" + tomorrow.toISOString().slice(0, 10),
+        "url": "http://165.246.196.154:25020/app/statis/deviceCompare?date_from=" + today.toISOString().slice(0, 10) + "&date_to=" + tomorrow.toISOString().slice(0, 10),
         "method": "GET",
       };
 
@@ -210,7 +210,7 @@
       })
       var stackApi = {
 
-        "url": "http://165.246.196.154:3002/app/statis/deviceCompare?date_from=2021-01-01&date_to=2100-01-01",
+        "url": "http://165.246.196.154:25020/app/statis/deviceCompare?date_from=2021-01-01&date_to=2100-01-01",
         "method": "GET",
         "async": false
       };
@@ -417,7 +417,7 @@
 
       $.ajax({
         method: "get",
-        url: "http://165.246.196.154:3002/app/statis/potholeallbymonth"
+        url: "http://165.246.196.154:25020/app/statis/potholeallbymonth"
       }).done((response) => {
         var monthData = new google.visualization.DataTable();
         monthData.addColumn('string', '달');
@@ -470,7 +470,7 @@
       })
       const cardSetting = {
         url:
-          "http://165.246.196.154:3002/app/statis/mainsection?secondDeviceId=" + "DEVICE"
+          "http://165.246.196.154:25020/app/statis/mainsection?secondDeviceId=" + "DEVICE"
         ,
         method: "GET"
       };
@@ -500,7 +500,7 @@
       });
 
       $.ajax({
-        url: "http://165.246.196.154:3002/app/statis/inspectAllByMonth",
+        url: "http://165.246.196.154:25020/app/statis/inspectAllByMonth",
         method: "get"
       }).done((response) => {
         var temp = [["1월", 0, 0], ["2월", 0, 0], ["3월", 0, 0], ["4월", 0, 0], ["5월", 0, 0], ["6월", 0, 0], ["7월", 0, 0], ["8월", 0, 0], ["9월", 0, 0], ["10월", 0, 0], ["11월", 0, 0], ["12월", 0, 0]];
@@ -544,7 +544,7 @@
 
       $.ajax({
         url:
-          "http://165.246.196.154:3002/app/statis/inspectAllByMonth?deviceId=DEVICE00000000",
+          "http://165.246.196.154:25020/app/statis/inspectAllByMonth?deviceId=DEVICE00000000",
         method: "get"
       }).done((response) => {
         var temp = [
@@ -599,7 +599,7 @@
       });
       ////////////////////////////////////////////////////////////////
       $.ajax({
-        "url": "http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + '2020-01-01' + "&date_to=" + '2100-01-01',
+        "url": "http://165.246.196.154:25020/app/statis/deviceCompare?date_from=" + '2020-01-01' + "&date_to=" + '2100-01-01',
         "method": "get"
       }).done((response) => {
         const dataArray = [
@@ -671,7 +671,7 @@
         console.log(response)
       })
       $.ajax({
-        "url": "http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate,
+        "url": "http://165.246.196.154:25020/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate,
         "method": "GET",
       }).done((response) => {
         const dataArray = [
@@ -752,10 +752,10 @@
       const fromDate = document.getElementById("frommonth").value
       const toDate = document.getElementById("tomonth").value
       console.log(fromDate, toDate)
-      console.log("http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate)
-      // console.log("http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate)
+      console.log("http://165.246.196.154:25020/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate)
+      // console.log("http://165.246.196.154:25020/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate)
       $.ajax({
-        "url": "http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate,
+        "url": "http://165.246.196.154:25020/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate,
         "method": "get"
       }).done((response) => {
         const dataArray = [
@@ -827,7 +827,7 @@
         console.log(response)
       })
       $.ajax({
-        "url": "http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate,
+        "url": "http://165.246.196.154:25020/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate,
         "method": "GET",
       }).done((response) => {
         const dataArray = [
@@ -915,10 +915,10 @@
 
 
       console.log(fromDate, toDate)
-      console.log("http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate)
-      // console.log("http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate)
+      console.log("http://165.246.196.154:25020/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate)
+      // console.log("http://165.246.196.154:25020/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate)
       $.ajax({
-        "url": "http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate,
+        "url": "http://165.246.196.154:25020/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate,
         "method": "get"
       }).done((response) => {
         const dataArray = [
@@ -990,7 +990,7 @@
         console.log(response)
       })
       $.ajax({
-        "url": "http://165.246.196.154:3002/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate,
+        "url": "http://165.246.196.154:25020/app/statis/deviceCompare?date_from=" + fromDate + "&date_to=" + toDate,
         "method": "GET",
       }).done((response) => {
         const dataArray = [
